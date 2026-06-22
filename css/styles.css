@@ -1,0 +1,542 @@
+/* ===================================================================
+   Central de Atendimento Carajás — Vale
+   Paleta: Verde #007E7A · Amarelo #ECB11F · Fundo #F4F7F6
+   Tipografia: Inter
+=================================================================== */
+
+:root {
+  --verde: #007E7A;
+  --verde-escuro: #00524F;
+  --verde-claro: #3FA39E;
+  --amarelo: #ECB11F;
+  --fundo: #F4F7F6;
+  --branco: #FFFFFF;
+  --texto-primario: #1F2D2C;
+  --texto-secundario: #5C6B6A;
+  --borda: #E1E8E7;
+  --perigo: #C0392B;
+  --sucesso: #1E8E5A;
+
+  --raio: 10px;
+  --raio-pequeno: 6px;
+  --sombra: 0 1px 2px rgba(15, 35, 33, 0.06), 0 8px 24px rgba(15, 35, 33, 0.06);
+  --transicao: 160ms ease;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--fundo);
+  color: var(--texto-primario);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  margin-top: 10px;
+}
+
+.escondido { display: none !important; }
+
+a, button { cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid var(--verde);
+  outline-offset: 2px;
+}
+
+/* ----------------------------- Login ----------------------------- */
+
+.tela-cheia {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--verde-escuro) 0%, var(--verde) 55%, var(--verde-claro) 100%);
+  padding: 24px;
+}
+
+.cartao-login {
+  background: var(--branco);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 30, 28, 0.35);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.marca-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--verde);
+  background: rgba(0, 126, 122, 0.1);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 14px;
+}
+
+.marca-tag-clara {
+  color: var(--branco);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.marca-login h1 {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.marca-login p {
+  margin: 0 0 28px;
+  color: var(--texto-secundario);
+  font-size: 0.92rem;
+}
+
+.form-login, #form-primeiro-acesso {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+input[type="email"], input[type="password"], input[type="text"],
+input[type="date"], input[type="time"], select, textarea {
+  border: 1.5px solid var(--borda);
+  border-radius: var(--raio-pequeno);
+  padding: 11px 13px;
+  background: var(--branco);
+  color: var(--texto-primario);
+  transition: border-color var(--transicao);
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--verde);
+}
+
+.form-login button, #form-primeiro-acesso button {
+  margin-top: 22px;
+  background: var(--verde);
+  color: var(--branco);
+  border: none;
+  border-radius: var(--raio-pequeno);
+  padding: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: background var(--transicao), transform var(--transicao);
+}
+
+.form-login button:hover, #form-primeiro-acesso button:hover { background: var(--verde-escuro); }
+.form-login button:active, #form-primeiro-acesso button:active { transform: scale(0.99); }
+.form-login button:disabled { opacity: 0.6; }
+
+.aviso-erro {
+  color: var(--perigo);
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+}
+
+/* ----------------------------- Modais ----------------------------- */
+
+.sobreposicao-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 35, 33, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.caixa-modal {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 32px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: var(--sombra);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.caixa-modal h2 {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.texto-modal-intro {
+  color: var(--texto-secundario);
+  font-size: 0.9rem;
+  margin: 0 0 18px;
+}
+
+.caixa-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.caixa-modal select, .caixa-modal textarea, .caixa-modal input {
+  margin-top: 4px;
+}
+
+.botoes-modal {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+/* ----------------------------- Cabeçalho app ----------------------------- */
+
+.cabecalho-app {
+  background: var(--verde-escuro);
+  color: var(--branco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px 28px;
+  flex-wrap: wrap;
+}
+
+.cabecalho-marca {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cabecalho-marca strong { font-size: 1.05rem; font-weight: 800; }
+
+.navegacao-abas {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.botao-aba {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.78);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: background var(--transicao), color var(--transicao);
+}
+
+.botao-aba.ativo {
+  background: var(--amarelo);
+  color: var(--verde-escuro);
+}
+
+.cabecalho-usuario {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.botao-link {
+  background: none;
+  border: none;
+  color: var(--amarelo);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+/* ----------------------------- Layout geral ----------------------------- */
+
+.conteudo-app {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}
+
+.cartao {
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 24px;
+  margin-bottom: 22px;
+}
+
+.cartao h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
+.subtitulo-cartao { color: var(--texto-secundario); font-size: 0.88rem; margin: 0 0 18px; }
+
+/* ----------------------------- Cronômetro (elemento de assinatura) ----------------------------- */
+
+.painel-cronometro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px 40px;
+}
+
+.anel-cronometro-wrap {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+
+.svg-anel { width: 100%; height: 100%; }
+
+.anel-trilha {
+  fill: none;
+  stroke: var(--borda);
+  stroke-width: 10;
+}
+
+.anel-progresso {
+  fill: none;
+  stroke: var(--verde);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.anel-cronometro-conteudo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+#cronometro-display {
+  font-size: 2.6rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--texto-primario);
+}
+
+#cronometro-status {
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+  font-weight: 600;
+}
+
+.aviso-info {
+  background: rgba(236, 177, 31, 0.16);
+  color: #7A5A0E;
+  border: 1px solid rgba(236, 177, 31, 0.4);
+  border-radius: var(--raio-pequeno);
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 28px 0 0;
+}
+
+.botoes-cronometro { margin-top: 32px; }
+
+.botao-grande {
+  border: none;
+  border-radius: 999px;
+  padding: 16px 48px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: transform var(--transicao), background var(--transicao);
+}
+.botao-grande:active { transform: scale(0.97); }
+
+.botao-play { background: var(--verde); color: var(--branco); }
+.botao-play:hover { background: var(--verde-escuro); }
+
+.botao-stop { background: var(--perigo); color: var(--branco); }
+.botao-stop:hover { background: #9c3122; }
+
+/* ----------------------------- Formulários ----------------------------- */
+
+.grade-formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 20px;
+}
+
+.campo-largo { grid-column: 1 / -1; }
+.campo-duas-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+
+.botao-primario {
+  background: var(--verde);
+  color: var(--branco);
+  border: none;
+  border-radius: var(--raio-pequeno);
+  padding: 12px 22px;
+  font-weight: 700;
+  transition: background var(--transicao);
+}
+.botao-primario:hover { background: var(--verde-escuro); }
+
+.botao-secundario {
+  background: var(--branco);
+  color: var(--verde-escuro);
+  border: 1.5px solid var(--verde);
+  border-radius: var(--raio-pequeno);
+  padding: 10px 18px;
+  font-weight: 700;
+  transition: background var(--transicao);
+}
+.botao-secundario:hover { background: rgba(0, 126, 122, 0.08); }
+
+.mensagem-feedback {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+.mensagem-erro { color: var(--perigo); }
+.mensagem-sucesso { color: var(--sucesso); }
+
+/* ----------------------------- Dashboard ----------------------------- */
+
+.barra-filtros {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.campo-filtro { display: flex; flex-direction: column; gap: 4px; }
+.campo-filtro label { font-size: 0.78rem; font-weight: 700; color: var(--texto-secundario); }
+.campo-filtro select { min-width: 200px; }
+
+.grade-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cartao-kpi { display: flex; flex-direction: column; gap: 8px; }
+.rotulo-kpi { font-size: 0.8rem; font-weight: 700; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.03em; }
+.valor-kpi { font-size: 2rem; font-weight: 800; color: var(--verde-escuro); font-variant-numeric: tabular-nums; }
+
+.grade-graficos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cartao-grafico h3 { margin: 0 0 14px; font-size: 1rem; font-weight: 700; }
+.cartao-grafico-largo { grid-column: 1 / -1; }
+
+.caixa-grafico { height: 280px; position: relative; }
+.caixa-grafico-ranking { height: 320px; }
+
+.cabecalho-tabela {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.acoes-exportacao { display: flex; gap: 10px; }
+
+.rolagem-tabela { overflow-x: auto; }
+
+.tabela-historico {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 920px;
+}
+
+.tabela-historico th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--borda);
+  color: var(--texto-secundario);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tabela-historico td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--borda);
+  vertical-align: top;
+}
+
+.celula-obs { max-width: 220px; }
+.celula-acoes { display: flex; gap: 8px; white-space: nowrap; }
+
+.selo {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+}
+.selo-pausa { background: rgba(236, 177, 31, 0.18); color: #7A5A0E; }
+
+.botao-icone {
+  background: none;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pequeno);
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--verde-escuro);
+}
+.botao-icone:hover { background: rgba(0, 126, 122, 0.08); }
+
+.botao-icone-perigo { color: var(--perigo); }
+.botao-icone-perigo:hover { background: rgba(192, 57, 43, 0.08); }
+
+.texto-bloqueado {
+  font-size: 0.78rem;
+  color: var(--texto-secundario);
+  font-style: italic;
+}
+
+.texto-vazio {
+  text-align: center;
+  color: var(--texto-secundario);
+  padding: 30px 0 8px;
+}
+
+/* ----------------------------- Responsivo ----------------------------- */
+
+@media (max-width: 900px) {
+  .grade-cards { grid-template-columns: 1fr; }
+  .grade-graficos { grid-template-columns: 1fr; }
+  .cartao-grafico-largo { grid-column: auto; }
+  .grade-formulario { grid-template-columns: 1fr; }
+  .campo-duas-colunas { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .cabecalho-app { padding: 14px 16px; }
+  .navegacao-abas { order: 3; width: 100%; justify-content: center; }
+  .conteudo-app { padding: 20px 14px 60px; }
+  .anel-cronometro-wrap { width: 220px; height: 220px; }
+  #cronometro-display { font-size: 2.1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anel-progresso { transition: none; }
+}

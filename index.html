@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Central de Atendimento Carajás · Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ===================== TELA DE LOGIN ===================== -->
+<div id="tela-login" class="tela-cheia">
+  <div class="cartao-login">
+    <div class="marca-login">
+      <span class="marca-tag">VALE · CARAJÁS</span>
+      <h1>Central de Atendimento</h1>
+      <p>Tracking operacional da Central de Atendimento Carajás.</p>
+    </div>
+    <form id="form-login" class="form-login">
+      <label for="login-email">E-mail corporativo</label>
+      <input type="email" id="login-email" required autocomplete="username" placeholder="nome.sobrenome@vale.com" />
+
+      <label for="login-senha">Senha</label>
+      <input type="password" id="login-senha" required autocomplete="current-password" placeholder="••••••••" />
+
+      <p id="login-erro" class="aviso-erro escondido"></p>
+
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== MODAL: PRIMEIRO ACESSO ===================== -->
+<div id="modal-primeiro-acesso" class="sobreposicao-modal escondido">
+  <div class="caixa-modal">
+    <h2>Bem-vindo(a)</h2>
+    <p class="texto-modal-intro">Antes de continuar, confirme seu nome completo. Ele será exibido em todos os seus registros de atendimento.</p>
+    <form id="form-primeiro-acesso">
+      <label for="pa-nome">Nome</label>
+      <input type="text" id="pa-nome" required placeholder="Ex.: João" />
+      <label for="pa-sobrenome">Sobrenome</label>
+      <input type="text" id="pa-sobrenome" required placeholder="Ex.: Silva" />
+      <button type="submit">Salvar e continuar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="app" class="escondido">
+
+  <header class="cabecalho-app">
+    <div class="cabecalho-marca">
+      <span class="marca-tag marca-tag-clara">VALE · CARAJÁS</span>
+      <strong>Central de Atendimento</strong>
+    </div>
+    <nav class="navegacao-abas">
+      <button class="botao-aba ativo" data-aba="cronometro">Cronômetro</button>
+      <button class="botao-aba" data-aba="manual">Lançamento Manual</button>
+      <button class="botao-aba" data-aba="dashboard">Dashboard</button>
+    </nav>
+    <div class="cabecalho-usuario">
+      <span id="nome-operador-topo"></span>
+      <button id="btn-logout" class="botao-link">Sair</button>
+    </div>
+  </header>
+
+  <main class="conteudo-app">
+
+    <!-- ---------- ABA: CRONÔMETRO ---------- -->
+    <section id="aba-cronometro" class="aba-painel">
+      <div class="painel-cronometro">
+        <div class="anel-cronometro-wrap">
+          <svg viewBox="0 0 200 200" class="svg-anel">
+            <circle cx="100" cy="100" r="90" class="anel-trilha" />
+            <circle id="anel-progresso" cx="100" cy="100" r="90" class="anel-progresso" transform="rotate(-90 100 100)" />
+          </svg>
+          <div class="anel-cronometro-conteudo">
+            <span id="cronometro-display">00:00:00</span>
+            <span id="cronometro-status">Pronto para iniciar</span>
+          </div>
+        </div>
+
+        <p id="aviso-atendimento-ativo" class="aviso-info escondido">
+          Atendimento em andamento — não é possível abrir outro até este ser encerrado.
+        </p>
+
+        <div class="botoes-cronometro">
+          <button id="btn-play" class="botao-grande botao-play">Iniciar</button>
+          <button id="btn-stop" class="botao-grande botao-stop escondido">Encerrar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- ABA: LANÇAMENTO MANUAL ---------- -->
+    <section id="aba-manual" class="aba-painel escondido">
+      <div class="cartao">
+        <h2>Lançamento manual</h2>
+        <p class="subtitulo-cartao">Use para registrar atendimentos retroativos (ex.: esqueceu de iniciar o cronômetro).</p>
+        <form id="form-manual" class="grade-formulario">
+          <div class="campo">
+            <label for="manual-processo">Processo</label>
+            <select id="manual-processo" required></select>
+          </div>
+          <div class="campo">
+            <label for="manual-atividade">Atividade</label>
+            <select id="manual-atividade" required></select>
+          </div>
+          <div class="campo">
+            <label for="manual-data">Data</label>
+            <input type="date" id="manual-data" required />
+          </div>
+          <div class="campo campo-duas-colunas">
+            <div>
+              <label for="manual-hora-inicio">Hora início</label>
+              <input type="time" id="manual-hora-inicio" required />
+            </div>
+            <div>
+              <label for="manual-hora-fim">Hora fim</label>
+              <input type="time" id="manual-hora-fim" required />
+            </div>
+          </div>
+          <div class="campo campo-largo">
+            <label for="manual-obs">Observação (opcional)</label>
+            <textarea id="manual-obs" rows="3" placeholder="Detalhes adicionais sobre o atendimento..."></textarea>
+          </div>
+          <div class="campo campo-largo">
+            <p id="manual-mensagem" class="mensagem-feedback escondido"></p>
+            <button type="submit" class="botao-primario">Registrar lançamento</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ---------- ABA: DASHBOARD ---------- -->
+    <section id="aba-dashboard" class="aba-painel escondido">
+
+      <div class="barra-filtros">
+        <div class="campo-filtro">
+          <label for="dash-periodo">Período</label>
+          <select id="dash-periodo">
+            <option value="hoje">Hoje</option>
+            <option value="semana">Esta Semana</option>
+            <option value="mes">Este Mês</option>
+            <option value="ano">Este Ano</option>
+            <option value="todo">Todo o Período</option>
+          </select>
+        </div>
+        <button id="dash-atualizar" class="botao-secundario">Atualizar</button>
+      </div>
+
+      <div class="grade-cards">
+        <div class="cartao cartao-kpi">
+          <span class="rotulo-kpi">Volume Total</span>
+          <span id="card-volume" class="valor-kpi">0</span>
+        </div>
+        <div class="cartao cartao-kpi">
+          <span class="rotulo-kpi">TMA (Tempo Médio de Atendimento)</span>
+          <span id="card-tma" class="valor-kpi">0s</span>
+        </div>
+        <div class="cartao cartao-kpi">
+          <span class="rotulo-kpi">Total de Horas</span>
+          <span id="card-horas" class="valor-kpi">0h</span>
+        </div>
+      </div>
+
+      <div class="grade-graficos">
+        <div class="cartao cartao-grafico cartao-grafico-largo">
+          <h3>Evolução do volume (janela 06h–18h)</h3>
+          <div class="caixa-grafico"><canvas id="chart-volume"></canvas></div>
+        </div>
+        <div class="cartao cartao-grafico">
+          <h3>Distribuição por Processo</h3>
+          <div class="caixa-grafico"><canvas id="chart-processo"></canvas></div>
+        </div>
+        <div class="cartao cartao-grafico cartao-grafico-largo">
+          <h3>Ranking por Operador</h3>
+          <div class="caixa-grafico caixa-grafico-ranking"><canvas id="chart-ranking"></canvas></div>
+        </div>
+      </div>
+
+      <div class="cartao">
+        <div class="cabecalho-tabela">
+          <h2>Histórico de atendimentos</h2>
+          <div class="acoes-exportacao">
+            <button id="btn-exportar-csv" class="botao-secundario">Exportar CSV</button>
+            <button id="btn-exportar-xlsx" class="botao-secundario">Exportar XLSX</button>
+          </div>
+        </div>
+        <div class="rolagem-tabela">
+          <table class="tabela-historico">
+            <thead>
+              <tr>
+                <th>Data</th><th>Início</th><th>Fim</th><th>Duração</th>
+                <th>Operador</th><th>Processo</th><th>Atividade</th>
+                <th>Pausa</th><th>Obs.</th><th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-historico-corpo"></tbody>
+          </table>
+          <p id="tabela-historico-vazia" class="texto-vazio escondido">Nenhum atendimento encontrado para este período.</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAL: FIM DE ATENDIMENTO ===================== -->
+<div id="modal-fim-atendimento" class="sobreposicao-modal escondido">
+  <div class="caixa-modal">
+    <h2>Finalizar atendimento</h2>
+    <form id="form-fim-atendimento">
+      <label for="fim-processo">Processo</label>
+      <select id="fim-processo" required></select>
+      <label for="fim-atividade">Atividade</label>
+      <select id="fim-atividade" required></select>
+      <label for="fim-obs">Observação (opcional)</label>
+      <textarea id="fim-obs" rows="3" placeholder="Detalhes adicionais..."></textarea>
+      <div class="botoes-modal">
+        <button type="button" id="fim-cancelar" class="botao-secundario">Cancelar</button>
+        <button type="submit" class="botao-primario">Salvar e encerrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== MODAL: EDIÇÃO DE REGISTRO ===================== -->
+<div id="modal-edicao" class="sobreposicao-modal escondido">
+  <div class="caixa-modal">
+    <h2>Editar registro</h2>
+    <form id="form-edicao">
+      <label for="edit-processo">Processo</label>
+      <select id="edit-processo" required></select>
+      <label for="edit-atividade">Atividade</label>
+      <select id="edit-atividade" required></select>
+      <label for="edit-data">Data</label>
+      <input type="date" id="edit-data" required />
+      <div class="campo-duas-colunas">
+        <div>
+          <label for="edit-hora-inicio">Hora início</label>
+          <input type="time" id="edit-hora-inicio" required />
+        </div>
+        <div>
+          <label for="edit-hora-fim">Hora fim</label>
+          <input type="time" id="edit-hora-fim" required />
+        </div>
+      </div>
+      <label for="edit-obs">Observação</label>
+      <textarea id="edit-obs" rows="3"></textarea>
+      <div class="botoes-modal">
+        <button type="button" id="edit-cancelar" class="botao-secundario">Cancelar</button>
+        <button type="submit" class="botao-primario">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Bibliotecas externas via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- Aplicação (ES Modules) -->
+<script type="module" src="js/app.js"></script>
+
+</body>
+</html>
