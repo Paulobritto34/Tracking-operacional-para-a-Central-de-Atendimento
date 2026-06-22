@@ -87,6 +87,16 @@
           Atendimento em andamento — não é possível abrir outro até este ser encerrado.
         </p>
 
+        <!-- Atalhos de pausa: encerram qualquer timer ativo e iniciam o intervalo -->
+        <div class="atalhos-pausa">
+          <p class="atalhos-pausa-titulo">Iniciar intervalo</p>
+          <div class="atalhos-pausa-botoes">
+            <button class="botao-atalho-pausa" data-atividade="Café da Manhã (15m)">☕ Café (15m)</button>
+            <button class="botao-atalho-pausa" data-atividade="Almoço (1h)">🍽️ Almoço (1h)</button>
+            <button class="botao-atalho-pausa" data-atividade="Lanche da Tarde (15m)">🥪 Lanche (15m)</button>
+          </div>
+        </div>
+
         <div class="botoes-cronometro">
           <button id="btn-play" class="botao-grande botao-play">Iniciar</button>
           <button id="btn-stop" class="botao-grande botao-stop escondido">Encerrar</button>
@@ -152,33 +162,92 @@
       </div>
 
       <div class="grade-cards">
-        <div class="cartao cartao-kpi">
-          <span class="rotulo-kpi">Volume Total</span>
-          <span id="card-volume" class="valor-kpi">0</span>
+
+        <!-- Volume -->
+        <div class="cartao cartao-kpi kpi-verde">
+          <div class="kpi-icone">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+          </div>
+          <div class="kpi-corpo">
+            <span class="rotulo-kpi">Volume Total</span>
+            <span id="card-volume" class="valor-kpi">—</span>
+            <span class="kpi-sub">atendimentos no período</span>
+          </div>
         </div>
-        <div class="cartao cartao-kpi">
-          <span class="rotulo-kpi">TMA (Tempo Médio de Atendimento)</span>
-          <span id="card-tma" class="valor-kpi">0s</span>
+
+        <!-- TMA -->
+        <div class="cartao cartao-kpi kpi-amarelo">
+          <div class="kpi-icone">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+          </div>
+          <div class="kpi-corpo">
+            <span class="rotulo-kpi">TMA</span>
+            <span id="card-tma" class="valor-kpi">—</span>
+            <span class="kpi-sub">tempo médio por atendimento</span>
+          </div>
         </div>
-        <div class="cartao cartao-kpi">
-          <span class="rotulo-kpi">Total de Horas</span>
-          <span id="card-horas" class="valor-kpi">0h</span>
+
+        <!-- Horas -->
+        <div class="cartao cartao-kpi kpi-teal">
+          <div class="kpi-icone">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zM9 14H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+            </svg>
+          </div>
+          <div class="kpi-corpo">
+            <span class="rotulo-kpi">Total de Horas</span>
+            <span id="card-horas" class="valor-kpi">—</span>
+            <span class="kpi-sub">horas registradas no período</span>
+          </div>
         </div>
+
       </div>
 
       <div class="grade-graficos">
+
+        <!-- Linha 1 – Volume (full width) -->
         <div class="cartao cartao-grafico cartao-grafico-largo">
-          <h3>Evolução do volume (janela 06h–18h)</h3>
+          <div class="grafico-header">
+            <h3 id="chart-volume-titulo">Evolução do volume por hora (06h–18h)</h3>
+            <span class="chart-badge chart-badge-verde">Atendimentos</span>
+          </div>
           <div class="caixa-grafico"><canvas id="chart-volume"></canvas></div>
         </div>
+
+        <!-- Linha 2 – TMA | Horas -->
         <div class="cartao cartao-grafico">
-          <h3>Distribuição por Processo</h3>
+          <div class="grafico-header">
+            <h3>Evolução do TMA</h3>
+            <span class="chart-badge chart-badge-amarelo">Minutos</span>
+          </div>
+          <div class="caixa-grafico"><canvas id="chart-tma-evolucao"></canvas></div>
+        </div>
+        <div class="cartao cartao-grafico">
+          <div class="grafico-header">
+            <h3>Horas trabalhadas</h3>
+            <span class="chart-badge chart-badge-teal">Horas</span>
+          </div>
+          <div class="caixa-grafico"><canvas id="chart-horas-evolucao"></canvas></div>
+        </div>
+
+        <!-- Linha 3 – Processo | Ranking -->
+        <div class="cartao cartao-grafico">
+          <div class="grafico-header">
+            <h3>Distribuição por Processo</h3>
+          </div>
           <div class="caixa-grafico"><canvas id="chart-processo"></canvas></div>
         </div>
-        <div class="cartao cartao-grafico cartao-grafico-largo">
-          <h3>Ranking por Operador</h3>
+        <div class="cartao cartao-grafico">
+          <div class="grafico-header">
+            <h3>Ranking por Operador</h3>
+          </div>
           <div class="caixa-grafico caixa-grafico-ranking"><canvas id="chart-ranking"></canvas></div>
         </div>
+
       </div>
 
       <div class="cartao">
@@ -213,6 +282,10 @@
 <div id="modal-fim-atendimento" class="sobreposicao-modal escondido">
   <div class="caixa-modal">
     <h2>Finalizar atendimento</h2>
+    <!-- Exibido apenas quando a finalização antecede uma pausa automática -->
+    <div id="fim-nota-pausa" class="banner-pausa-modal escondido">
+      ⏸ Após salvar, o intervalo "<span id="fim-nota-pausa-nome"></span>" será iniciado automaticamente.
+    </div>
     <form id="form-fim-atendimento">
       <label for="fim-processo">Processo</label>
       <select id="fim-processo" required></select>

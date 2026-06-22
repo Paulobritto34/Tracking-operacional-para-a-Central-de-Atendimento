@@ -429,9 +429,7 @@ input:focus, select:focus, textarea:focus {
   margin-bottom: 20px;
 }
 
-.cartao-kpi { display: flex; flex-direction: column; gap: 8px; }
-.rotulo-kpi { font-size: 0.8rem; font-weight: 700; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.03em; }
-.valor-kpi { font-size: 2rem; font-weight: 800; color: var(--verde-escuro); font-variant-numeric: tabular-nums; }
+/* .cartao-kpi / .rotulo-kpi / .valor-kpi definidos na seção "KPI Cards (v2)" abaixo */
 
 .grade-graficos {
   display: grid;
@@ -517,6 +515,168 @@ input:focus, select:focus, textarea:focus {
   text-align: center;
   color: var(--texto-secundario);
   padding: 30px 0 8px;
+}
+
+/* ----------------------------- KPI Cards (v2) ----------------------------- */
+
+/* Substitui o layout anterior de coluna simples */
+.cartao-kpi {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-top: 3px solid var(--borda);
+  padding: 20px 22px;
+}
+
+/* Variantes de cor (borda topo + ícone) */
+.cartao-kpi.kpi-verde   { border-top-color: var(--verde); }
+.cartao-kpi.kpi-amarelo { border-top-color: var(--amarelo); }
+.cartao-kpi.kpi-teal    { border-top-color: var(--verde-claro); }
+
+/* Container do ícone */
+.kpi-icone {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.kpi-verde   .kpi-icone { background: rgba(0, 126, 122, 0.10); }
+.kpi-amarelo .kpi-icone { background: rgba(236, 177, 31, 0.12); }
+.kpi-teal    .kpi-icone { background: rgba(63, 163, 158, 0.12); }
+
+.kpi-icone svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+.kpi-verde   .kpi-icone svg { color: var(--verde); }
+.kpi-amarelo .kpi-icone svg { color: #C68E00; }
+.kpi-teal    .kpi-icone svg { color: var(--verde-claro); }
+
+/* Corpo de texto do KPI */
+.kpi-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+/* Rótulo já definido mais acima — apenas reset do margin */
+.rotulo-kpi { margin-top: 0; }
+
+/* Valor principal — sobrescreve o tamanho anterior */
+.valor-kpi {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--texto-primario);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+/* Subtítulo descritivo abaixo do valor */
+.kpi-sub {
+  font-size: 0.74rem;
+  color: var(--texto-secundario);
+  margin-top: 2px;
+}
+
+/* ----------------------------- Gráficos (header + badge) ------------------- */
+
+.grafico-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.grafico-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--texto-primario);
+}
+
+/* Badge colorido ao lado do título do gráfico */
+.chart-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.chart-badge-verde   { background: rgba(0, 126, 122, 0.10); color: var(--verde); }
+.chart-badge-amarelo { background: rgba(236, 177, 31, 0.14); color: #8A6500; }
+.chart-badge-teal    { background: rgba(63, 163, 158, 0.13); color: var(--verde-claro); }
+
+/* Tabela com zebra e hover */
+.tabela-historico tbody tr:nth-child(even) td {
+  background: rgba(0, 126, 122, 0.03);
+}
+.tabela-historico tbody tr:hover td {
+  background: rgba(0, 126, 122, 0.07);
+}
+
+/* ----------------------------- Atalhos de pausa ----------------------------- */
+
+.atalhos-pausa {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.atalhos-pausa-titulo {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 10px;
+}
+
+.atalhos-pausa-botoes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.botao-atalho-pausa {
+  background: var(--branco);
+  border: 1.5px solid var(--borda);
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--texto-primario);
+  transition: background var(--transicao), border-color var(--transicao), color var(--transicao);
+}
+
+.botao-atalho-pausa:hover {
+  background: rgba(236, 177, 31, 0.14);
+  border-color: var(--amarelo);
+  color: #7A5A0E;
+}
+
+/* Anel muda para amarelo quando um intervalo está em andamento */
+.anel-progresso.modo-pausa {
+  stroke: var(--amarelo);
+}
+
+/* Banner de aviso dentro do modal de finalização */
+.banner-pausa-modal {
+  background: rgba(236, 177, 31, 0.15);
+  border: 1px solid rgba(236, 177, 31, 0.5);
+  border-radius: var(--raio-pequeno);
+  padding: 10px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #7A5A0E;
+  margin-bottom: 14px;
 }
 
 /* ----------------------------- Responsivo ----------------------------- */

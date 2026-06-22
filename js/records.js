@@ -14,7 +14,7 @@ import {
   Timestamp,
 } from './firebase.js';
 import { state, isLideranca } from './state.js';
-import { isPausaProcesso } from './constants.js';
+import { isPausaProcesso, PROCESSO_PAUSA } from './constants.js';
 
 const COLECAO = 'atendimentos';
 
@@ -46,6 +46,28 @@ export async function iniciarAtendimento() {
     atividade: null,
     obs: '',
     isPausa: false,
+    origem: 'cronometro',
+    criadoEm: serverTimestamp(),
+  });
+  return docRef.id;
+}
+
+/**
+ * Inicia um timer de pausa/intervalo. Já grava isPausa=true e a atividade
+ * no documento inicial para que um F5 consiga restaurar o estado correto.
+ */
+export async function iniciarAtendimentoPausa(atividade) {
+  const docRef = await addDoc(collection(db, COLECAO), {
+    uid: state.user.uid,
+    nomeOperador: `${state.user.nome} ${state.user.sobrenome}`.trim(),
+    status: 'em_andamento',
+    inicio: serverTimestamp(),
+    fim: null,
+    duracaoSegundos: null,
+    processo: PROCESSO_PAUSA,
+    atividade,
+    obs: '',
+    isPausa: true,
     origem: 'cronometro',
     criadoEm: serverTimestamp(),
   });
